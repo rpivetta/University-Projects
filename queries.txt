@@ -1,0 +1,210 @@
+1.
+select first_name, last_name 
+  from customer limit 5
+
+"Mary"	"Smith"
+"Patricia"	"Johnson"
+"Linda"	"Williams"
+"Barbara"	"Jones"
+"Elizabeth"	"Brown"
+
+
+2.
+select email 
+  from customer 
+ where first_name 
+  like "Willard"
+
+willard.lumpkin@sakilacustomer.org
+
+
+3.
+select count(*) 
+  from customer
+
+599
+
+
+4.
+select count(*) 
+  from customer
+ where store_id = 1
+
+326
+
+
+5.
+select rental_rate 
+  from film 
+ where title 
+  like "Virtual Spoilers"
+
+4.99
+
+
+6.
+select 1 
+  from film 
+ where title 
+  like "%Princess%"
+
+"1"
+"1"
+
+
+7.
+select title 
+  from film 
+ where length <= 180
+
+"Academy Dinosaur"
+"Ace Goldfinger"
+"Adaptation Holes"
+"Affair Prejudice"
+"African Egg"
+
+
+8.
+select count(film_id) 
+  from film 
+ where length <= 60 
+   and rating = "G"
+
+22
+
+
+9.
+select max(replacement_cost) 
+  from film
+
+29.99
+
+
+10.
+select distinct(rating),count(film_id) 
+  from film 
+ group by rating
+
+"G"	"178"
+"NC-17"	"210"
+"PG"	"194"
+"PG-13"	"223"
+"R"	"195"
+
+
+11.
+select count(actor_id) 
+ from film 
+ join film_actor 
+   on film.film_id = film_actor.film_id
+where title 
+ like "Scalawag Duck"
+
+5
+
+
+12.
+select film_id 
+  from film_actor 
+  join actor 
+    on actor.actor_id = film_actor.actor_id
+ where first_name like "Jude" 
+   and last_name like "Cruise" limit 5
+
+"16"
+"34"
+"101"
+"114"
+"122"
+
+
+13.
+select language.name
+  from language
+  join film 
+    on film.language_id = language.language_id
+ where film.title like "Ace Goldfinger"
+
+Japanese
+
+
+14.
+select customer.first_name, count(rental.rental_id) 
+  from rental 
+  join customer 
+    on rental.customer_id = customer.customer_id
+ group by customer.first_name 
+ limit 5
+
+"Aaron"	"24"
+"Adam"	"22"
+"Adrian"  "19"
+"Agnes"	"23"
+"Alan"	"26"
+
+
+15.
+select count(rental.rental_id) 
+ from rental join customer 
+   on rental.customer_id = customer.customer_id
+where customer.last_name = "Smith"
+
+32
+
+
+16.
+select customer.first_name, customer.last_name 
+  from rental 
+  join customer 
+    on rental.customer_id = customer.customer_id 
+ where return_date is null limit 5
+
+"Gail"	"Knight"
+"Gregory"	"Mauldin"
+"Louise"	"Jenkins"
+"Willie"	"Howell"
+"Emily"	"Diaz"
+
+
+17.
+select actor.first_name, actor.last_name 
+  from actor join film_actor 
+    on actor.actor_id = film_actor.actor_id 
+  join film 
+    on film_actor.film_id = film.film_id
+ where film.title = "Splash Gump" limit 5
+
+"Penelope"	"Guiness"
+"Jennifer"	"Davis"
+"Uma"	"Wood"
+"Cameron"	"Streep"
+"Christian"	"Neeson"
+
+
+18.
+select title 
+  from film join film_actor 
+ using (film_id) 
+  join actor using (actor_id) 
+ where first_name='Penelope' 
+   and last_name='Guiness'
+
+"Academy Dinosaur"
+"Anaconda Confessions"
+"Angels Life"
+"Bulworth Commandments"
+"Cheaper Clyde"
+
+19.
+select title 
+  from customer, rental, inventory, film 
+ where customer.customer_id = rental.customer_id 
+   and rental.inventory_id = inventory.inventory_id 
+   and inventory.film_id = film.film_id and last_name = "Knight" limit 5
+
+"Jericho Mulan"
+"Frost Head"
+"Clerks Angels"
+"Wife Turn"
+"Expecations Natural"
+
